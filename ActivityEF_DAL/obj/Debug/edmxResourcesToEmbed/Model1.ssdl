@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProjectXModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Batch">
+    <Key>
+      <PropertyRef Name="BatchId" />
+    </Key>
+    <Property Name="BatchId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BatchName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="StartDate" Type="date" Nullable="false" />
+    <Property Name="StudentCount" Type="int" Nullable="false" />
+    <Property Name="ModelId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BatchCourseFacultyMapping">
+    <Key>
+      <PropertyRef Name="BCFId" />
+    </Key>
+    <Property Name="BatchId" Type="int" Nullable="false" />
+    <Property Name="CourseId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="FacultyId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="BCFId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ProjectX.dbo.CourseModelMapping' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="CourseModelMapping">
+    <Key>
+      <PropertyRef Name="ModelId" />
+      <PropertyRef Name="CourseId" />
+    </Key>
+    <Property Name="ModelId" Type="int" Nullable="false" />
+    <Property Name="CourseId" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Courses">
+    <Key>
+      <PropertyRef Name="CourseId" />
+    </Key>
+    <Property Name="CourseId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CourseTitle" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CourseDuration" Type="int" />
+    <Property Name="CourseMode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Curriculum" Type="varbinary" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="DeliveryModel">
+    <Key>
+      <PropertyRef Name="ModelId" />
+    </Key>
+    <Property Name="ModelName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ModelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Faculty">
+    <Key>
+      <PropertyRef Name="PSNO" />
+    </Key>
+    <Property Name="PSNO" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmailId" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="FacultyName" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ProjectX.dbo.FacultyCourseMapping' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="FacultyCourseMapping">
+    <Key>
+      <PropertyRef Name="CourseId" />
+      <PropertyRef Name="PSNO" />
+      <PropertyRef Name="PrimaryFaculty" />
+    </Key>
+    <Property Name="CourseId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PSNO" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PrimaryFaculty" Type="char" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Grader">
+    <Key>
+      <PropertyRef Name="GId" />
+    </Key>
+    <Property Name="BCFId" Type="int" Nullable="false" />
+    <Property Name="PSNO" Type="int" Nullable="false" />
+    <Property Name="Score" Type="float" Nullable="false" />
+    <Property Name="GId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Participants">
+    <Key>
+      <PropertyRef Name="PSNo" />
+    </Key>
+    <Property Name="PSNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ParticipantsName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ParticipantsEmail" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ProjectX.dbo.ParticipantsBatchMapping' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ParticipantsBatchMapping">
+    <Key>
+      <PropertyRef Name="PSNO" />
+      <PropertyRef Name="BatchId" />
+    </Key>
+    <Property Name="PSNO" Type="int" Nullable="false" />
+    <Property Name="BatchId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__CourseMod__Cours__02FC7413">
+    <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+    <End Role="CourseModelMapping" Type="Self.CourseModelMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="CourseId" />
+      </Principal>
+      <Dependent Role="CourseModelMapping">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__FacultyCo__Cours__628FA481">
+    <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+    <End Role="FacultyCourseMapping" Type="Self.FacultyCourseMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="CourseId" />
+      </Principal>
+      <Dependent Role="FacultyCourseMapping">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__FacultyCou__PSNO__6383C8BA">
+    <End Role="Faculty" Type="Self.Faculty" Multiplicity="1" />
+    <End Role="FacultyCourseMapping" Type="Self.FacultyCourseMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Faculty">
+        <PropertyRef Name="PSNO" />
+      </Principal>
+      <Dependent Role="FacultyCourseMapping">
+        <PropertyRef Name="PSNO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Grader__PSNO__10566F31">
+    <End Role="Participants" Type="Self.Participants" Multiplicity="1" />
+    <End Role="Grader" Type="Self.Grader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Participants">
+        <PropertyRef Name="PSNo" />
+      </Principal>
+      <Dependent Role="Grader">
+        <PropertyRef Name="PSNO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Participa__Batch__797309D9">
+    <End Role="Batch" Type="Self.Batch" Multiplicity="1" />
+    <End Role="ParticipantsBatchMapping" Type="Self.ParticipantsBatchMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Batch">
+        <PropertyRef Name="BatchId" />
+      </Principal>
+      <Dependent Role="ParticipantsBatchMapping">
+        <PropertyRef Name="BatchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Participan__PSNo__787EE5A0">
+    <End Role="Participants" Type="Self.Participants" Multiplicity="1" />
+    <End Role="ParticipantsBatchMapping" Type="Self.ParticipantsBatchMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Participants">
+        <PropertyRef Name="PSNo" />
+      </Principal>
+      <Dependent Role="ParticipantsBatchMapping">
+        <PropertyRef Name="PSNO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Batch_BatchCourseFacultyMapping">
+    <End Role="Batch" Type="Self.Batch" Multiplicity="1" />
+    <End Role="BatchCourseFacultyMapping" Type="Self.BatchCourseFacultyMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Batch">
+        <PropertyRef Name="BatchId" />
+      </Principal>
+      <Dependent Role="BatchCourseFacultyMapping">
+        <PropertyRef Name="BatchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Batch_DeliveryModel">
+    <End Role="DeliveryModel" Type="Self.DeliveryModel" Multiplicity="1" />
+    <End Role="Batch" Type="Self.Batch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeliveryModel">
+        <PropertyRef Name="ModelId" />
+      </Principal>
+      <Dependent Role="Batch">
+        <PropertyRef Name="ModelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Course_BatchCourseFacultyMapping">
+    <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+    <End Role="BatchCourseFacultyMapping" Type="Self.BatchCourseFacultyMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="CourseId" />
+      </Principal>
+      <Dependent Role="BatchCourseFacultyMapping">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CourseModelMapping_DeliveryModel">
+    <End Role="DeliveryModel" Type="Self.DeliveryModel" Multiplicity="1" />
+    <End Role="CourseModelMapping" Type="Self.CourseModelMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeliveryModel">
+        <PropertyRef Name="ModelId" />
+      </Principal>
+      <Dependent Role="CourseModelMapping">
+        <PropertyRef Name="ModelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Faculty_BatchCourseFacultyMapping">
+    <End Role="Faculty" Type="Self.Faculty" Multiplicity="1" />
+    <End Role="BatchCourseFacultyMapping" Type="Self.BatchCourseFacultyMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Faculty">
+        <PropertyRef Name="PSNO" />
+      </Principal>
+      <Dependent Role="BatchCourseFacultyMapping">
+        <PropertyRef Name="FacultyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Grader_BatchCourseFacultyMapping">
+    <End Role="BatchCourseFacultyMapping" Type="Self.BatchCourseFacultyMapping" Multiplicity="1" />
+    <End Role="Grader" Type="Self.Grader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BatchCourseFacultyMapping">
+        <PropertyRef Name="BCFId" />
+      </Principal>
+      <Dependent Role="Grader">
+        <PropertyRef Name="BCFId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ProjectXModelStoreContainer">
+    <EntitySet Name="Batch" EntityType="Self.Batch" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BatchCourseFacultyMapping" EntityType="Self.BatchCourseFacultyMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DeliveryModel" EntityType="Self.DeliveryModel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Faculty" EntityType="Self.Faculty" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Grader" EntityType="Self.Grader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Participants" EntityType="Self.Participants" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CourseModelMapping" EntityType="Self.CourseModelMapping" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [CourseModelMapping].[ModelId] AS [ModelId], 
+    [CourseModelMapping].[CourseId] AS [CourseId]
+    FROM [dbo].[CourseModelMapping] AS [CourseModelMapping]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="FacultyCourseMapping" EntityType="Self.FacultyCourseMapping" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [FacultyCourseMapping].[CourseId] AS [CourseId], 
+    [FacultyCourseMapping].[PSNO] AS [PSNO], 
+    [FacultyCourseMapping].[PrimaryFaculty] AS [PrimaryFaculty]
+    FROM [dbo].[FacultyCourseMapping] AS [FacultyCourseMapping]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="ParticipantsBatchMapping" EntityType="Self.ParticipantsBatchMapping" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ParticipantsBatchMapping].[PSNO] AS [PSNO], 
+    [ParticipantsBatchMapping].[BatchId] AS [BatchId]
+    FROM [dbo].[ParticipantsBatchMapping] AS [ParticipantsBatchMapping]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__CourseMod__Cours__02FC7413" Association="Self.FK__CourseMod__Cours__02FC7413">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="CourseModelMapping" EntitySet="CourseModelMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__FacultyCo__Cours__628FA481" Association="Self.FK__FacultyCo__Cours__628FA481">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="FacultyCourseMapping" EntitySet="FacultyCourseMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__FacultyCou__PSNO__6383C8BA" Association="Self.FK__FacultyCou__PSNO__6383C8BA">
+      <End Role="Faculty" EntitySet="Faculty" />
+      <End Role="FacultyCourseMapping" EntitySet="FacultyCourseMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Grader__PSNO__10566F31" Association="Self.FK__Grader__PSNO__10566F31">
+      <End Role="Participants" EntitySet="Participants" />
+      <End Role="Grader" EntitySet="Grader" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Participa__Batch__797309D9" Association="Self.FK__Participa__Batch__797309D9">
+      <End Role="Batch" EntitySet="Batch" />
+      <End Role="ParticipantsBatchMapping" EntitySet="ParticipantsBatchMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Participan__PSNo__787EE5A0" Association="Self.FK__Participan__PSNo__787EE5A0">
+      <End Role="Participants" EntitySet="Participants" />
+      <End Role="ParticipantsBatchMapping" EntitySet="ParticipantsBatchMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Batch_BatchCourseFacultyMapping" Association="Self.FK_Batch_BatchCourseFacultyMapping">
+      <End Role="Batch" EntitySet="Batch" />
+      <End Role="BatchCourseFacultyMapping" EntitySet="BatchCourseFacultyMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Batch_DeliveryModel" Association="Self.FK_Batch_DeliveryModel">
+      <End Role="DeliveryModel" EntitySet="DeliveryModel" />
+      <End Role="Batch" EntitySet="Batch" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Course_BatchCourseFacultyMapping" Association="Self.FK_Course_BatchCourseFacultyMapping">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="BatchCourseFacultyMapping" EntitySet="BatchCourseFacultyMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CourseModelMapping_DeliveryModel" Association="Self.FK_CourseModelMapping_DeliveryModel">
+      <End Role="DeliveryModel" EntitySet="DeliveryModel" />
+      <End Role="CourseModelMapping" EntitySet="CourseModelMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Faculty_BatchCourseFacultyMapping" Association="Self.FK_Faculty_BatchCourseFacultyMapping">
+      <End Role="Faculty" EntitySet="Faculty" />
+      <End Role="BatchCourseFacultyMapping" EntitySet="BatchCourseFacultyMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Grader_BatchCourseFacultyMapping" Association="Self.FK_Grader_BatchCourseFacultyMapping">
+      <End Role="BatchCourseFacultyMapping" EntitySet="BatchCourseFacultyMapping" />
+      <End Role="Grader" EntitySet="Grader" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

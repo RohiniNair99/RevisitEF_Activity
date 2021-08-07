@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ProjectXModelStoreContainer" CdmEntityContainer="ConnectX">
+    <EntitySetMapping Name="Batches">
+      <EntityTypeMapping TypeName="ProjectXModel.Batch">
+        <MappingFragment StoreEntitySet="Batch">
+          <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+          <ScalarProperty Name="BatchName" ColumnName="BatchName" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="StudentCount" ColumnName="StudentCount" />
+          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BatchCourseFacultyMappings">
+      <EntityTypeMapping TypeName="ProjectXModel.BatchCourseFacultyMapping">
+        <MappingFragment StoreEntitySet="BatchCourseFacultyMapping">
+          <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+          <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
+          <ScalarProperty Name="BCFId" ColumnName="BCFId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Courses">
+      <EntityTypeMapping TypeName="ProjectXModel.Cours">
+        <MappingFragment StoreEntitySet="Courses">
+          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+          <ScalarProperty Name="CourseTitle" ColumnName="CourseTitle" />
+          <ScalarProperty Name="CourseDuration" ColumnName="CourseDuration" />
+          <ScalarProperty Name="CourseMode" ColumnName="CourseMode" />
+          <ScalarProperty Name="Curriculum" ColumnName="Curriculum" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeliveryModels">
+      <EntityTypeMapping TypeName="ProjectXModel.DeliveryModel">
+        <MappingFragment StoreEntitySet="DeliveryModel">
+          <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Faculties">
+      <EntityTypeMapping TypeName="ProjectXModel.Faculty">
+        <MappingFragment StoreEntitySet="Faculty">
+          <ScalarProperty Name="PSNO" ColumnName="PSNO" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="FacultyName" ColumnName="FacultyName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Graders">
+      <EntityTypeMapping TypeName="ProjectXModel.Grader">
+        <MappingFragment StoreEntitySet="Grader">
+          <ScalarProperty Name="BCFId" ColumnName="BCFId" />
+          <ScalarProperty Name="PSNO" ColumnName="PSNO" />
+          <ScalarProperty Name="Score" ColumnName="Score" />
+          <ScalarProperty Name="GId" ColumnName="GId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Participants">
+      <EntityTypeMapping TypeName="ProjectXModel.Participant">
+        <MappingFragment StoreEntitySet="Participants">
+          <ScalarProperty Name="PSNo" ColumnName="PSNo" />
+          <ScalarProperty Name="ParticipantsName" ColumnName="ParticipantsName" />
+          <ScalarProperty Name="ParticipantsEmail" ColumnName="ParticipantsEmail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FacultyCourseMappings">
+      <EntityTypeMapping TypeName="ProjectXModel.FacultyCourseMapping">
+        <MappingFragment StoreEntitySet="FacultyCourseMapping">
+          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+          <ScalarProperty Name="PSNO" ColumnName="PSNO" />
+          <ScalarProperty Name="PrimaryFaculty" ColumnName="PrimaryFaculty" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CourseModelMapping" TypeName="ProjectXModel.CourseModelMapping" StoreEntitySet="CourseModelMapping">
+      <EndProperty Name="Courses">
+        <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+      </EndProperty>
+      <EndProperty Name="DeliveryModel">
+        <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ParticipantsBatchMapping" TypeName="ProjectXModel.ParticipantsBatchMapping" StoreEntitySet="ParticipantsBatchMapping">
+      <EndProperty Name="Batch">
+        <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+      </EndProperty>
+      <EndProperty Name="Participants">
+        <ScalarProperty Name="PSNo" ColumnName="PSNO" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

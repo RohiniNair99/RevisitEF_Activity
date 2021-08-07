@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProjectXModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Batch">
+    <Key>
+      <PropertyRef Name="BatchId" />
+    </Key>
+    <Property Name="BatchId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BatchName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="StudentCount" Type="Int32" Nullable="false" />
+    <Property Name="ModelId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="BatchCourseFacultyMappings" Relationship="Self.FK_Batch_BatchCourseFacultyMapping" FromRole="Batch" ToRole="BatchCourseFacultyMapping" />
+    <NavigationProperty Name="DeliveryModel" Relationship="Self.FK_Batch_DeliveryModel" FromRole="Batch" ToRole="DeliveryModel" />
+    <NavigationProperty Name="Participants" Relationship="Self.ParticipantsBatchMapping" FromRole="Batch" ToRole="Participants" />
+  </EntityType>
+  <EntityType Name="BatchCourseFacultyMapping">
+    <Key>
+      <PropertyRef Name="BCFId" />
+    </Key>
+    <Property Name="BatchId" Type="Int32" Nullable="false" />
+    <Property Name="CourseId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FacultyId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BCFId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Batch" Relationship="Self.FK_Batch_BatchCourseFacultyMapping" FromRole="BatchCourseFacultyMapping" ToRole="Batch" />
+    <NavigationProperty Name="Cours" Relationship="Self.FK_Course_BatchCourseFacultyMapping" FromRole="BatchCourseFacultyMapping" ToRole="Courses" />
+    <NavigationProperty Name="Faculty" Relationship="Self.FK_Faculty_BatchCourseFacultyMapping" FromRole="BatchCourseFacultyMapping" ToRole="Faculty" />
+    <NavigationProperty Name="Graders" Relationship="Self.FK_Grader_BatchCourseFacultyMapping" FromRole="BatchCourseFacultyMapping" ToRole="Grader" />
+  </EntityType>
+  <EntityType Name="Cours">
+    <Key>
+      <PropertyRef Name="CourseId" />
+    </Key>
+    <Property Name="CourseId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CourseTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CourseDuration" Type="Int32" />
+    <Property Name="CourseMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Curriculum" Type="Binary" MaxLength="100" FixedLength="false" />
+    <NavigationProperty Name="BatchCourseFacultyMappings" Relationship="Self.FK_Course_BatchCourseFacultyMapping" FromRole="Courses" ToRole="BatchCourseFacultyMapping" />
+    <NavigationProperty Name="FacultyCourseMappings" Relationship="Self.FK__FacultyCo__Cours__628FA481" FromRole="Courses" ToRole="FacultyCourseMapping" />
+    <NavigationProperty Name="DeliveryModels" Relationship="Self.CourseModelMapping" FromRole="Courses" ToRole="DeliveryModel" />
+  </EntityType>
+  <EntityType Name="DeliveryModel">
+    <Key>
+      <PropertyRef Name="ModelId" />
+    </Key>
+    <Property Name="ModelName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ModelId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Batches" Relationship="Self.FK_Batch_DeliveryModel" FromRole="DeliveryModel" ToRole="Batch" />
+    <NavigationProperty Name="Courses" Relationship="Self.CourseModelMapping" FromRole="DeliveryModel" ToRole="Courses" />
+  </EntityType>
+  <EntityType Name="Faculty">
+    <Key>
+      <PropertyRef Name="PSNO" />
+    </Key>
+    <Property Name="PSNO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EmailId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FacultyName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="BatchCourseFacultyMappings" Relationship="Self.FK_Faculty_BatchCourseFacultyMapping" FromRole="Faculty" ToRole="BatchCourseFacultyMapping" />
+    <NavigationProperty Name="FacultyCourseMappings" Relationship="Self.FK__FacultyCou__PSNO__6383C8BA" FromRole="Faculty" ToRole="FacultyCourseMapping" />
+  </EntityType>
+  <EntityType Name="Grader">
+    <Key>
+      <PropertyRef Name="GId" />
+    </Key>
+    <Property Name="BCFId" Type="Int32" Nullable="false" />
+    <Property Name="PSNO" Type="Int32" Nullable="false" />
+    <Property Name="Score" Type="Double" Nullable="false" />
+    <Property Name="GId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="BatchCourseFacultyMapping" Relationship="Self.FK_Grader_BatchCourseFacultyMapping" FromRole="Grader" ToRole="BatchCourseFacultyMapping" />
+    <NavigationProperty Name="Participant" Relationship="Self.FK__Grader__PSNO__10566F31" FromRole="Grader" ToRole="Participants" />
+  </EntityType>
+  <EntityType Name="Participant">
+    <Key>
+      <PropertyRef Name="PSNo" />
+    </Key>
+    <Property Name="PSNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ParticipantsName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ParticipantsEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Graders" Relationship="Self.FK__Grader__PSNO__10566F31" FromRole="Participants" ToRole="Grader" />
+    <NavigationProperty Name="Batches" Relationship="Self.ParticipantsBatchMapping" FromRole="Participants" ToRole="Batch" />
+  </EntityType>
+  <EntityType Name="FacultyCourseMapping">
+    <Key>
+      <PropertyRef Name="CourseId" />
+      <PropertyRef Name="PSNO" />
+      <PropertyRef Name="PrimaryFaculty" />
+    </Key>
+    <Property Name="CourseId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PSNO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PrimaryFaculty" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Cours" Relationship="Self.FK__FacultyCo__Cours__628FA481" FromRole="FacultyCourseMapping" ToRole="Courses" />
+    <NavigationProperty Name="Faculty" Relationship="Self.FK__FacultyCou__PSNO__6383C8BA" FromRole="FacultyCourseMapping" ToRole="Faculty" />
+  </EntityType>
+  <Association Name="FK_Batch_BatchCourseFacultyMapping">
+    <End Role="Batch" Type="Self.Batch" Multiplicity="1" />
+    <End Role="BatchCourseFacultyMapping" Type="Self.BatchCourseFacultyMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Batch">
+        <PropertyRef Name="BatchId" />
+      </Principal>
+      <Dependent Role="BatchCourseFacultyMapping">
+        <PropertyRef Name="BatchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Batch_DeliveryModel">
+    <End Role="DeliveryModel" Type="Self.DeliveryModel" Multiplicity="1" />
+    <End Role="Batch" Type="Self.Batch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeliveryModel">
+        <PropertyRef Name="ModelId" />
+      </Principal>
+      <Dependent Role="Batch">
+        <PropertyRef Name="ModelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Course_BatchCourseFacultyMapping">
+    <End Role="Courses" Type="Self.Cours" Multiplicity="1" />
+    <End Role="BatchCourseFacultyMapping" Type="Self.BatchCourseFacultyMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="CourseId" />
+      </Principal>
+      <Dependent Role="BatchCourseFacultyMapping">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Faculty_BatchCourseFacultyMapping">
+    <End Role="Faculty" Type="Self.Faculty" Multiplicity="1" />
+    <End Role="BatchCourseFacultyMapping" Type="Self.BatchCourseFacultyMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Faculty">
+        <PropertyRef Name="PSNO" />
+      </Principal>
+      <Dependent Role="BatchCourseFacultyMapping">
+        <PropertyRef Name="FacultyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Grader_BatchCourseFacultyMapping">
+    <End Role="BatchCourseFacultyMapping" Type="Self.BatchCourseFacultyMapping" Multiplicity="1" />
+    <End Role="Grader" Type="Self.Grader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BatchCourseFacultyMapping">
+        <PropertyRef Name="BCFId" />
+      </Principal>
+      <Dependent Role="Grader">
+        <PropertyRef Name="BCFId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__FacultyCo__Cours__628FA481">
+    <End Role="Courses" Type="Self.Cours" Multiplicity="1" />
+    <End Role="FacultyCourseMapping" Type="Self.FacultyCourseMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="CourseId" />
+      </Principal>
+      <Dependent Role="FacultyCourseMapping">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__FacultyCou__PSNO__6383C8BA">
+    <End Role="Faculty" Type="Self.Faculty" Multiplicity="1" />
+    <End Role="FacultyCourseMapping" Type="Self.FacultyCourseMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Faculty">
+        <PropertyRef Name="PSNO" />
+      </Principal>
+      <Dependent Role="FacultyCourseMapping">
+        <PropertyRef Name="PSNO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Grader__PSNO__10566F31">
+    <End Role="Participants" Type="Self.Participant" Multiplicity="1" />
+    <End Role="Grader" Type="Self.Grader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Participants">
+        <PropertyRef Name="PSNo" />
+      </Principal>
+      <Dependent Role="Grader">
+        <PropertyRef Name="PSNO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CourseModelMapping">
+    <End Role="Courses" Type="Self.Cours" Multiplicity="*" />
+    <End Role="DeliveryModel" Type="Self.DeliveryModel" Multiplicity="*" />
+  </Association>
+  <Association Name="ParticipantsBatchMapping">
+    <End Role="Batch" Type="Self.Batch" Multiplicity="*" />
+    <End Role="Participants" Type="Self.Participant" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="ConnectX" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Batches" EntityType="Self.Batch" />
+    <EntitySet Name="BatchCourseFacultyMappings" EntityType="Self.BatchCourseFacultyMapping" />
+    <EntitySet Name="Courses" EntityType="Self.Cours" />
+    <EntitySet Name="DeliveryModels" EntityType="Self.DeliveryModel" />
+    <EntitySet Name="Faculties" EntityType="Self.Faculty" />
+    <EntitySet Name="Graders" EntityType="Self.Grader" />
+    <EntitySet Name="Participants" EntityType="Self.Participant" />
+    <EntitySet Name="FacultyCourseMappings" EntityType="Self.FacultyCourseMapping" />
+    <AssociationSet Name="FK_Batch_BatchCourseFacultyMapping" Association="Self.FK_Batch_BatchCourseFacultyMapping">
+      <End Role="Batch" EntitySet="Batches" />
+      <End Role="BatchCourseFacultyMapping" EntitySet="BatchCourseFacultyMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Batch_DeliveryModel" Association="Self.FK_Batch_DeliveryModel">
+      <End Role="DeliveryModel" EntitySet="DeliveryModels" />
+      <End Role="Batch" EntitySet="Batches" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Course_BatchCourseFacultyMapping" Association="Self.FK_Course_BatchCourseFacultyMapping">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="BatchCourseFacultyMapping" EntitySet="BatchCourseFacultyMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Faculty_BatchCourseFacultyMapping" Association="Self.FK_Faculty_BatchCourseFacultyMapping">
+      <End Role="Faculty" EntitySet="Faculties" />
+      <End Role="BatchCourseFacultyMapping" EntitySet="BatchCourseFacultyMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Grader_BatchCourseFacultyMapping" Association="Self.FK_Grader_BatchCourseFacultyMapping">
+      <End Role="BatchCourseFacultyMapping" EntitySet="BatchCourseFacultyMappings" />
+      <End Role="Grader" EntitySet="Graders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__FacultyCo__Cours__628FA481" Association="Self.FK__FacultyCo__Cours__628FA481">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="FacultyCourseMapping" EntitySet="FacultyCourseMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__FacultyCou__PSNO__6383C8BA" Association="Self.FK__FacultyCou__PSNO__6383C8BA">
+      <End Role="Faculty" EntitySet="Faculties" />
+      <End Role="FacultyCourseMapping" EntitySet="FacultyCourseMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Grader__PSNO__10566F31" Association="Self.FK__Grader__PSNO__10566F31">
+      <End Role="Participants" EntitySet="Participants" />
+      <End Role="Grader" EntitySet="Graders" />
+    </AssociationSet>
+    <AssociationSet Name="CourseModelMapping" Association="Self.CourseModelMapping">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="DeliveryModel" EntitySet="DeliveryModels" />
+    </AssociationSet>
+    <AssociationSet Name="ParticipantsBatchMapping" Association="Self.ParticipantsBatchMapping">
+      <End Role="Batch" EntitySet="Batches" />
+      <End Role="Participants" EntitySet="Participants" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

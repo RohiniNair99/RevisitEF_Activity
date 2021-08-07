@@ -1,0 +1,14 @@
+D:\Rohini\C# ACTIVITIES\ProblemEF_Activity\ActivityEF_DAL\bin\Debug\ActivityEF_DAL.dll.config
+D:\Rohini\C# ACTIVITIES\ProblemEF_Activity\ActivityEF_DAL\bin\Debug\ActivityEF_DAL.dll
+D:\Rohini\C# ACTIVITIES\ProblemEF_Activity\ActivityEF_DAL\bin\Debug\ActivityEF_DAL.pdb
+D:\Rohini\C# ACTIVITIES\ProblemEF_Activity\ActivityEF_DAL\bin\Debug\ActivityEF_DTO.dll
+D:\Rohini\C# ACTIVITIES\ProblemEF_Activity\ActivityEF_DAL\bin\Debug\EntityFramework.dll
+D:\Rohini\C# ACTIVITIES\ProblemEF_Activity\ActivityEF_DAL\bin\Debug\EntityFramework.SqlServer.dll
+D:\Rohini\C# ACTIVITIES\ProblemEF_Activity\ActivityEF_DAL\bin\Debug\ActivityEF_DTO.pdb
+D:\Rohini\C# ACTIVITIES\ProblemEF_Activity\ActivityEF_DAL\bin\Debug\EntityFramework.xml
+D:\Rohini\C# ACTIVITIES\ProblemEF_Activity\ActivityEF_DAL\bin\Debug\EntityFramework.SqlServer.xml
+D:\Rohini\C# ACTIVITIES\ProblemEF_Activity\ActivityEF_DAL\obj\Debug\ActivityEF_DAL.csproj.AssemblyReference.cache
+D:\Rohini\C# ACTIVITIES\ProblemEF_Activity\ActivityEF_DAL\obj\Debug\ActivityEF_DAL.csproj.CoreCompileInputs.cache
+D:\Rohini\C# ACTIVITIES\ProblemEF_Activity\ActivityEF_DAL\obj\Debug\ActivityEF_DAL.csproj.CopyComplete
+D:\Rohini\C# ACTIVITIES\ProblemEF_Activity\ActivityEF_DAL\obj\Debug\ActivityEF_DAL.dll
+D:\Rohini\C# ACTIVITIES\ProblemEF_Activity\ActivityEF_DAL\obj\Debug\ActivityEF_DAL.pdb
